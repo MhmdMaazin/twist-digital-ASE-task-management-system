@@ -81,7 +81,11 @@ body {
 }
 
 /* Smooth transitions for interactive elements */
-button, a, input, select, textarea {
+button,
+a,
+input,
+select,
+textarea {
   transition: all 0.2s ease-in-out;
 }
 
@@ -102,4 +106,21 @@ button, a, input, select, textarea {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--color-accent);
+}
+
+/* Make native date input calendar icon white where possible */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  -webkit-filter: invert(1) brightness(2) saturate(0);
+  filter: invert(1) brightness(2) saturate(0);
+}
+
+/* Firefox */
+input[type="date"]::-moz-calendar-picker-indicator {
+  filter: invert(1) brightness(2) saturate(0);
+}
+
+/* Fallback: ensure the input background doesn't hide the icon */
+input[type="date"] {
+  background-repeat: no-repeat;
+  background-position: right 0.5rem center;
 }

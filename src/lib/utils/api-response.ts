@@ -41,7 +41,8 @@ export function errorResponse(
  * Handle Zod validation errors
  */
 export function handleZodError(error: ZodError) {
-  const details = error.errors.map((err) => ({
+  const issues = error.issues || error.errors || [];
+  const details = issues.map((err: any) => ({
     field: err.path.join('.'),
     message: err.message,
   }));

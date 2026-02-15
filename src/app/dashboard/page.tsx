@@ -125,7 +125,7 @@ export default function DashboardPage() {
               <span className="text-accent">S</span>
               <span className="text-primary">T</span>
               <span className="text-muted-foreground text-xxl ml-1">DIGITAL</span>
-              <span className="text-foreground text-base ml-2">Task Management System</span>
+              <span className="text-foreground text-base block mt-1">Task Management System</span>
             </h1>
             <p className="text-sm text-foreground/70 mt-1">Welcome, {user.name}</p>
           </div>

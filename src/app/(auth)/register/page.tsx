@@ -40,10 +40,10 @@ export default function RegisterPage() {
       router.push('/dashboard');
     } catch (err) {
       if (err instanceof APIError) {
-        if (err.details?.details) {
-          // Validation errors
+        // Check if details is an array of validation errors
+        if (Array.isArray(err.details)) {
           const errors: Record<string, string> = {};
-          err.details.details.forEach((detail: any) => {
+          err.details.forEach((detail: any) => {
             errors[detail.field] = detail.message;
           });
           setFieldErrors(errors);
@@ -64,9 +64,11 @@ export default function RegisterPage() {
         <CardHeader className="space-y-3 text-center">
           <div className="mx-auto mb-2">
             <div className="text-3xl font-bold">
-              <span className="text-primary">TWIST</span>
-              <span className="text-accent">2</span>
-              <span className="text-muted-foreground text-xl ml-1">DIGITAL</span>
+              <span className="text-primary">TWI</span>
+              <span className="text-accent">S</span>
+              <span className="text-primary">T</span>
+              <span className="text-muted-foreground text-xxl ml-1">DIGITAL</span>
+              <span className="text-foreground text-base block mt-1">Task Management System</span>
             </div>
           </div>
           <CardTitle className="text-2xl font-bold tracking-tight">Create an account</CardTitle>
