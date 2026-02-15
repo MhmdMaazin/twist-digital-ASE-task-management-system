@@ -294,5 +294,4 @@ PORT=3001 npm run dev
 
 ---
 
-**Built for Associate Software Engineer Assessment at Twist Digital**#   t w i s t - d i g i t a l - A S E - t a s k - m a n a g e m e n t - s y s t e m  
- 
+**Built for Associate Software Engineer Assessment at Twist Digital**
