@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+@theme {
+  /* Twist Digital Brand Colors */
+  --color-background: oklch(98% 0.005 250);
+  --color-foreground: oklch(20% 0.02 250);
+  --color-card: oklch(100% 0 0);
+  --color-card-foreground: oklch(20% 0.02 250);
+  --color-popover: oklch(100% 0 0);
+  --color-popover-foreground: oklch(20% 0.02 250);
+
+  /* Primary: Twist Digital Navy Blue */
+  --color-primary: oklch(28% 0.05 250);
+  --color-primary-foreground: oklch(98% 0 0);
+
+  /* Secondary: Light Gray */
+  --color-secondary: oklch(95% 0.005 250);
+  --color-secondary-foreground: oklch(28% 0.05 250);
+
+  /* Muted */
+  --color-muted: oklch(96% 0.005 250);
+  --color-muted-foreground: oklch(40% 0.02 250);
+
+  /* Accent: Twist Digital Pink/Red */
+  --color-accent: oklch(60% 0.22 350);
+  --color-accent-foreground: oklch(98% 0 0);
+
+  /* Destructive */
+  --color-destructive: oklch(55% 0.22 25);
+  --color-destructive-foreground: oklch(98% 0 0);
+
+  /* Border & Input */
+  --color-border: oklch(88% 0.005 250);
+  --color-input: oklch(88% 0.005 250);
+  --color-ring: oklch(60% 0.22 350);
+
+  /* Radius - More modern rounded corners */
+  --radius: 0.75rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  @theme {
+    /* Dark Mode with Twist Digital Colors */
+    --color-background: oklch(12% 0.02 250);
+    --color-foreground: oklch(95% 0 0);
+    --color-card: oklch(15% 0.02 250);
+    --color-card-foreground: oklch(95% 0 0);
+    --color-popover: oklch(15% 0.02 250);
+    --color-popover-foreground: oklch(95% 0 0);
+
+    /* Primary: Lighter navy for dark mode */
+    --color-primary: oklch(45% 0.08 250);
+    --color-primary-foreground: oklch(98% 0 0);
+
+    --color-secondary: oklch(20% 0.02 250);
+    --color-secondary-foreground: oklch(95% 0 0);
+    --color-muted: oklch(20% 0.02 250);
+    --color-muted-foreground: oklch(65% 0.02 250);
+
+    /* Accent: Brighter pink for dark mode */
+    --color-accent: oklch(65% 0.24 350);
+    --color-accent-foreground: oklch(12% 0.02 250);
+
+    --color-destructive: oklch(55% 0.22 25);
+    --color-destructive-foreground: oklch(98% 0 0);
+    --color-border: oklch(25% 0.02 250);
+    --color-input: oklch(25% 0.02 250);
+    --color-ring: oklch(65% 0.24 350);
+  }
+}
+
+* {
+  border-color: var(--color-border);
+}
+
+body {
+  background-color: var(--color-background);
+  color: var(--color-foreground);
+  font-feature-settings: "rlig" 1, "calt" 1;
+  letter-spacing: -0.011em;
+}
+
+/* Smooth transitions for interactive elements */
+button, a, input, select, textarea {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-muted);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
