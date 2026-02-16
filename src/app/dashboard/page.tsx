@@ -1,10 +1,12 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/auth-context';
 import { tasksAPI } from '@/lib/api/client';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import TaskList from '@/components/dashboard/TaskList';
 import TaskForm from '@/components/dashboard/TaskForm';
@@ -14,6 +16,10 @@ export default function DashboardPage() {
   const router = useRouter();
   const { user, loading: authLoading, logout } = useAuth();
   const [tasks, setTasks] = useState<any[]>([]);
+  const [search, setSearch] = useState('');
+  const [statusFilter, setStatusFilter] = useState('');
+  const [priorityFilter, setPriorityFilter] = useState('');
+  const [sortBy, setSortBy] = useState('created_desc');
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -99,6 +105,58 @@ export default function DashboardPage() {
     }
   };
 
+  // Derived filtered + sorted tasks
+  const filteredTasks = useMemo(() => {
+    const q = (search || '').trim().toLowerCase();
+    let list = (tasks || []).slice();
+
+    if (q.length > 0) {
+      list = list.filter((t) => {
+        const title = String(t.title || '').toLowerCase();
+        const desc = String(t.description || '').toLowerCase();
+        return title.includes(q) || desc.includes(q);
+      });
+    }
+
+    if (statusFilter) {
+      list = list.filter((t) => t.status === statusFilter);
+    }
+
+    if (priorityFilter) {
+      list = list.filter((t) => t.priority === priorityFilter);
+    }
+
+    // Sorting
+    list.sort((a, b) => {
+      const createdA = new Date(a.createdAt).getTime();
+      const createdB = new Date(b.createdAt).getTime();
+      const updatedA = new Date(a.updatedAt || a.createdAt).getTime();
+      const updatedB = new Date(b.updatedAt || b.createdAt).getTime();
+
+      switch (sortBy) {
+        case 'created_asc':
+          return createdA - createdB;
+        case 'created_desc':
+          return createdB - createdA;
+        case 'updated_asc':
+          return updatedA - updatedB;
+        case 'updated_desc':
+          return updatedB - updatedA;
+        default:
+          return createdB - createdA;
+      }
+    });
+
+    return list;
+  }, [tasks, search, statusFilter, priorityFilter, sortBy]);
+
+  const clearFilters = () => {
+    setSearch('');
+    setStatusFilter('');
+    setPriorityFilter('');
+    setSortBy('created_desc');
+  };
+
   if (authLoading || loading) {
     return (
       <div className="flex min-h-screen items-center justify-center">
@@ -141,8 +199,63 @@ export default function DashboardPage() {
         {stats && <StatsCards stats={stats} />}
 
         {/* Actions */}
-        <div className="mt-8 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-foreground">Your Tasks</h2>
+        <div className="mt-8 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3">
+            <h2 className="text-xl font-bold text-foreground whitespace-nowrap">Your Tasks</h2>
+            <div className="ml-0 sm:ml-4 flex flex-col sm:flex-row sm:items-center gap-2 flex-1">
+              <Label htmlFor="search" className="sr-only">Search</Label>
+              <Input
+                id="search"
+                placeholder="Search by title or description"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                className="h-10 w-full sm:w-64"
+              />
+
+              <select
+                value={statusFilter}
+                onChange={(e) => setStatusFilter(e.target.value)}
+                className="flex h-10 w-full sm:w-40 rounded-md border border-input bg-background px-3 py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                aria-label="Filter by status"
+              >
+                <option value="">All statuses</option>
+                <option value="todo">To Do</option>
+                <option value="in_progress">In Progress</option>
+                <option value="done">Done</option>
+              </select>
+
+              <select
+                value={priorityFilter}
+                onChange={(e) => setPriorityFilter(e.target.value)}
+                className="flex h-10 w-full sm:w-40 rounded-md border border-input bg-background px-3 py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                aria-label="Filter by priority"
+              >
+                <option value="">All priorities</option>
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+              </select>
+
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                className="flex h-10 w-full sm:w-48 rounded-md border border-input bg-background px-3 py-1 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                aria-label="Sort tasks"
+              >
+                <option value="created_desc">Newest</option>
+                <option value="created_asc">Oldest</option>
+                <option value="updated_desc">Recently updated</option>
+                <option value="updated_asc">Least recently updated</option>
+              </select>
+
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" onClick={clearFilters} className="ml-0 sm:ml-1 h-10">
+                  Clear
+                </Button>
+              </div>
+            </div>
+          </div>
+
           <Button
             onClick={() => {
               setEditingTask(null);
@@ -186,8 +299,11 @@ export default function DashboardPage() {
 
         {/* Task List */}
         <div className="mt-6">
+          <div className="mb-4 text-sm text-muted-foreground">
+            Showing {filteredTasks.length} of {tasks.length} tasks
+          </div>
           <TaskList
-            tasks={tasks}
+            tasks={filteredTasks}
             onEdit={handleEdit}
             onDelete={handleDeleteTask}
           />

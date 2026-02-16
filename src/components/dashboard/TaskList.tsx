@@ -135,16 +135,14 @@ export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
 
             <div className="flex flex-wrap gap-2">
               <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
-                  statusColors[task.status]
-                }`}
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${statusColors[task.status]
+                  }`}
               >
                 {statusLabels[task.status]}
               </span>
               <span
-                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${
-                  priorityColors[task.priority]
-                }`}
+                className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium border ${priorityColors[task.priority]
+                  }`}
               >
                 {priorityLabels[task.priority]}
               </span>
