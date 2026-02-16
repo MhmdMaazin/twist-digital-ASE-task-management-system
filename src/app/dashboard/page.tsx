@@ -11,6 +11,16 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import TaskList from '@/components/dashboard/TaskList';
 import TaskForm from '@/components/dashboard/TaskForm';
 import StatsCards from '@/components/dashboard/StatsCards';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog';
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -25,6 +35,11 @@ export default function DashboardPage() {
   const [error, setError] = useState('');
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<any>(null);
+  const [deleteConfirm, setDeleteConfirm] = useState<{
+    isOpen: boolean;
+    taskId: string | null;
+    taskTitle: string;
+  }>({ isOpen: false, taskId: null, taskTitle: '' });
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -81,13 +96,24 @@ export default function DashboardPage() {
   };
 
   const handleDeleteTask = async (id: string) => {
-    if (!confirm('Are you sure you want to delete this task?')) return;
+    const task = tasks.find(t => t._id === id);
+    setDeleteConfirm({
+      isOpen: true,
+      taskId: id,
+      taskTitle: task?.title || 'this task',
+    });
+  };
+
+  const confirmDelete = async () => {
+    if (!deleteConfirm.taskId) return;
     try {
-      await tasksAPI.delete(id);
+      await tasksAPI.delete(deleteConfirm.taskId);
       await fetchTasks();
       await fetchStats();
     } catch (err: any) {
-      alert(err.message);
+      setError(err.message);
+    } finally {
+      setDeleteConfirm({ isOpen: false, taskId: null, taskTitle: '' });
     }
   };
 
@@ -289,6 +315,30 @@ export default function DashboardPage() {
             </Card>
           </div>
         )}
+
+        {/* Delete Confirmation Dialog */}
+        <AlertDialog
+          open={deleteConfirm.isOpen}
+          onOpenChange={(open) => !open && setDeleteConfirm({ isOpen: false, taskId: null, taskTitle: '' })}
+        >
+          <AlertDialogContent>
+            <AlertDialogHeader>
+              <AlertDialogTitle>Delete Task</AlertDialogTitle>
+              <AlertDialogDescription>
+                Are you sure you want to delete &quot;{deleteConfirm.taskTitle}&quot;? This action cannot be undone.
+              </AlertDialogDescription>
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogAction
+                onClick={confirmDelete}
+                className="bg-destructive hover:bg-destructive/90 text-destructive-foreground"
+              >
+                Delete
+              </AlertDialogAction>
+            </AlertDialogFooter>
+          </AlertDialogContent>
+        </AlertDialog>
 
         {/* Error Message */}
         {error && (
