@@ -12,6 +12,9 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   title: "Twist Digital - Task Management",
   description: "Modern task management system by Twist Digital",
+  icons: {
+    icon: "/unnamed.png",
+  },
 };
 
 export default function RootLayout({
