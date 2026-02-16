@@ -2,84 +2,98 @@
 
 A secure, full-stack task management application built with Next.js 15, MongoDB, and TypeScript. Features include user authentication, CRUD operations for tasks, real-time statistics, and comprehensive security measures.
 
-## 🚀 Live Demo
+**🔗 Live Demo:** [https://twist-digital-task-management.vercel.app](https://twist-digital-task-management.vercel.app)
 
-**Deployed URL**: [Will be added after deployment]
+---
 
-## 📋 Features
+## ✨ Features
 
 ### Core Functionality
-- ✅ **User Authentication** - Secure registration and login with JWT tokens
-- ✅ **Task Management** - Create, read, update, and delete tasks
-- ✅ **Task Organization** - Status (To Do, In Progress, Done) and Priority (Low, Medium, High)
-- ✅ **Task Statistics** - Real-time dashboard with task counts
-- ✅ **Due Dates** - Optional due date tracking
-- ✅ **Route Protection** - Protected dashboard requiring authentication
+
+| Feature | Description |
+|---------|-------------|
+| 🔐 **User Authentication** | Secure registration and login with JWT tokens |
+| 📝 **Task Management** | Full CRUD operations for tasks |
+| 🏷️ **Task Organization** | Status (To Do, In Progress, Done) & Priority (Low, Medium, High) |
+| 📊 **Task Statistics** | Real-time dashboard with task counts |
+| 📅 **Due Dates** | Optional due date tracking |
+| 🛡️ **Route Protection** | Protected dashboard requiring authentication |
 
 ### Security Features
-- 🔒 **Password Hashing** - bcrypt with 12 rounds
-- 🔒 **JWT Authentication** - Short-lived access tokens (15 min) with refresh tokens (7 days)
-- 🔒 **Rate Limiting** - Protects against brute force attacks (5 req/min for auth, 100 req/min for API)
-- 🔒 **Input Validation** - Zod schemas for runtime validation + Mongoose schemas
-- 🔒 **Security Headers** - CSP, X-Frame-Options, HSTS, etc.
-- 🔒 **NoSQL Injection Prevention** - Sanitized inputs and strict validation
-- 🔒 **CSRF Protection** - SameSite cookies
-- 🔒 **Error Handling** - No stack trace leaks in production
+
+| Feature | Implementation |
+|---------|----------------|
+| 🔒 Password Hashing | bcrypt with 12 rounds |
+| 🔒 JWT Authentication | Short-lived access tokens (15 min) + refresh tokens (7 days) |
+| 🔒 Rate Limiting | 5 req/min for auth, 100 req/min for API |
+| 🔒 Input Validation | Zod schemas for runtime validation + Mongoose schemas |
+| 🔒 Security Headers | CSP, X-Frame-Options, HSTS |
+| 🔒 NoSQL Injection Prevention | Sanitized inputs and strict validation |
+| 🔒 CSRF Protection | SameSite cookies |
+| 🔒 Error Handling | No stack trace leaks in production |
 
 ### UI/UX
+
 - 🎨 **Responsive Design** - Mobile-first, works on all devices
-- 🎨 **Accessibility** - ARIA labels, keyboard navigation, semantic HTML
-- 🎨 **Loading States** - Skeleton loaders and spinners
-- 🎨 **Error States** - User-friendly error messages
-- 🎨 **Form Validation** - Real-time validation with helpful error messages
+- ♿ **Accessibility** - ARIA labels, keyboard navigation, semantic HTML
+- ⏳ **Loading States** - Skeleton loaders and spinners
+- ⚠️ **Error States** - User-friendly error messages
+- ✅ **Form Validation** - Real-time validation with helpful feedback
+
+---
 
 ## 🛠 Tech Stack
 
 ### Frontend
-- **Next.js 15** - App Router with React Server Components
-- **TypeScript** - Type-safe development
-- **Tailwind CSS** - Utility-first styling
-- **Radix UI** - Accessible component primitives
+
+![Next.js](https://img.shields.io/badge/Next.js%2016-App%20Router-black?logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-Type%20Safe-007ACC?logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-Utility%20First-38B2AC?logo=tailwind-css)
+![Radix UI](https://img.shields.io/badge/Radix_UI-Accessible-8B5CF6)
 
 ### Backend
-- **Next.js API Routes** - Serverless API endpoints
-- **MongoDB** - NoSQL database
-- **Mongoose** - ODM with schema validation
-- **Jose** - JWT handling for edge runtime
-- **bcryptjs** - Password hashing
+
+![Next.js API Routes](https://img.shields.io/badge/Next.js-API%20Routes-black?logo=next.js)
+![MongoDB](https://img.shields.io/badge/MongoDB-NoSQL-4EA94B?logo=mongodb)
+![Mongoose](https://img.shields.io/badge/Mongoose-ODM-880000)
+![Jose](https://img.shields.io/badge/Jose-JWT%20Handling-blue)
 
 ### Security & DevOps
-- **Zod** - Runtime type validation
-- **@upstash/ratelimit** - Distributed rate limiting
-- **Next.js Middleware** - Security headers and CORS
+
+![Zod](https://img.shields.io/badge/Zod-Validation-3E67B1)
+![Upstash](https://img.shields.io/badge/Upstash-Rate%20Limiting-FF4444)
+
+---
 
 ## 📦 Prerequisites
 
 - **Node.js** 18.x or higher
 - **npm** or **yarn**
 - **MongoDB** - Local installation or MongoDB Atlas account
-- **(Optional) Upstash Redis** - For distributed rate limiting
+- **(Optional)** Upstash Redis - For distributed rate limiting
+
+---
 
 ## 🚀 Getting Started
 
 ### 1. Clone the Repository
 
-\`\`\`bash
+```bash
 git clone <repository-url>
 cd task-management-system
-\`\`\`
+```
 
 ### 2. Install Dependencies
 
-\`\`\`bash
+```bash
 npm install
-\`\`\`
+```
 
 ### 3. Environment Setup
 
-Create a \`.env.local\` file in the root directory:
+Create a `.env.local` file in the root directory:
 
-\`\`\`env
+```env
 # MongoDB Connection
 # Local MongoDB
 MONGODB_URI=mongodb://localhost:27017/task-management
@@ -101,55 +115,62 @@ NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 # Node Environment
 NODE_ENV=development
-\`\`\`
+```
 
 ### 4. Generate Secure Secrets
 
-\`\`\`bash
+```bash
 # On Linux/Mac
 openssl rand -base64 32
 
 # On Windows (PowerShell)
 [Convert]::ToBase64String((1..32 | ForEach-Object {Get-Random -Minimum 0 -Maximum 256}))
-\`\`\`
+```
 
-Use these generated strings for \`JWT_SECRET\` and \`JWT_REFRESH_SECRET\`.
+Use these generated strings for `JWT_SECRET` and `JWT_REFRESH_SECRET`.
 
 ### 5. Setup MongoDB
 
-**Option A: Local MongoDB**
+<details>
+<summary><b>Option A: Local MongoDB</b></summary>
 
 1. Install MongoDB: https://www.mongodb.com/docs/manual/installation/
 2. Start MongoDB:
-\`\`\`bash
+
+```bash
 # On Mac/Linux
 mongod
 
 # On Windows
 net start MongoDB
-\`\`\`
+```
 
-**Option B: MongoDB Atlas (Recommended)**
+</details>
+
+<details>
+<summary><b>Option B: MongoDB Atlas (Recommended)</b></summary>
 
 1. Sign up at https://www.mongodb.com/cloud/atlas
 2. Create a free cluster
-3. Whitelist your IP address (or allow from anywhere: 0.0.0.0/0)
+3. Whitelist your IP address (or allow from anywhere: `0.0.0.0/0`)
 4. Create a database user
-5. Get your connection string and update \`MONGODB_URI\` in \`.env.local\`
+5. Get your connection string and update `MONGODB_URI` in `.env.local`
+
+</details>
 
 ### 6. (Optional) Setup Upstash Redis
 
 1. Sign up at https://upstash.com
 2. Create a Redis database
-3. Copy REST URL and Token to \`.env.local\`
+3. Copy REST URL and Token to `.env.local`
 
-If you skip this, the app will use in-memory rate limiting (works fine for development/single-instance deployment).
+> **Note:** If you skip this, the app will use in-memory rate limiting (works fine for development/single-instance deployment).
 
 ### 7. Run the Development Server
 
-\`\`\`bash
+```bash
 npm run dev
-\`\`\`
+```
 
 Open [http://localhost:3000](http://localhost:3000) in your browser.
 
@@ -159,43 +180,43 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 2. Create an account (password must have uppercase, lowercase, and number)
 3. You'll be automatically logged in and redirected to the dashboard
 
+---
+
 ## 📚 API Documentation
 
 ### Authentication Endpoints
 
-#### POST /api/auth/register
-Register a new user.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/api/auth/register` | Register a new user |
+| `POST` | `/api/auth/login` | Login with existing credentials |
+| `POST` | `/api/auth/refresh` | Refresh access token |
+| `POST` | `/api/auth/logout` | Logout and clear tokens |
+| `GET` | `/api/auth/me` | Get current user details |
 
-**Request:**
-\`\`\`json
+<details>
+<summary><b>📝 Request/Response Examples</b></summary>
+
+#### Register User
+
+```http
+POST /api/auth/register
+Content-Type: application/json
+
 {
   "email": "user@example.com",
   "password": "SecurePass123",
   "name": "John Doe"
 }
-\`\`\`
+```
 
-#### POST /api/auth/login
-Login with existing credentials.
+#### Create Task
 
-#### POST /api/auth/refresh
-Refresh access token.
+```http
+POST /api/tasks
+Content-Type: application/json
+Authorization: Bearer <access_token>
 
-#### POST /api/auth/logout
-Logout and clear tokens.
-
-#### GET /api/auth/me
-Get current user details.
-
-### Task Endpoints (Authentication Required)
-
-#### GET /api/tasks
-Get all tasks for authenticated user.
-
-#### POST /api/tasks
-Create a new task.
-
-\`\`\`json
 {
   "title": "New Task",
   "description": "Task description",
@@ -203,16 +224,21 @@ Create a new task.
   "priority": "medium",
   "dueDate": "2024-12-31T00:00:00.000Z"
 }
-\`\`\`
+```
 
-#### PUT /api/tasks/[id]
-Update an existing task.
+</details>
 
-#### DELETE /api/tasks/[id]
-Delete a task.
+### Task Endpoints (Authentication Required)
 
-#### GET /api/tasks/stats
-Get task statistics.
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `GET` | `/api/tasks` | Get all tasks for authenticated user |
+| `POST` | `/api/tasks` | Create a new task |
+| `PUT` | `/api/tasks/[id]` | Update an existing task |
+| `DELETE` | `/api/tasks/[id]` | Delete a task |
+| `GET` | `/api/tasks/stats` | Get task statistics |
+
+---
 
 ## 🚢 Deployment
 
@@ -220,78 +246,112 @@ Get task statistics.
 
 1. **Push to GitHub**
 
-\`\`\`bash
+```bash
 git init
 git add .
 git commit -m "Initial commit"
 git remote add origin <your-github-repo>
 git push -u origin main
-\`\`\`
+```
 
 2. **Deploy on Vercel**
    - Go to [vercel.com](https://vercel.com)
    - Click "Import Project"
    - Select your GitHub repository
-   - Add environment variables from \`.env.local\`
+   - Add environment variables from `.env.local`
    - Click "Deploy"
 
-3. **Important**: Use MongoDB Atlas for production (not local MongoDB)
-
-## 🏗 Project Structure
-
-\`\`\`
-task-management-system/
-├── src/
-│   ├── app/                            # Next.js App Router
-│   │   ├── (auth)/                     # Auth pages (login, register)
-│   │   ├── api/                        # API routes
-│   │   ├── dashboard/                  # Dashboard page
-│   │   └── page.tsx                    # Home (redirects)
-│   ├── components/                     # React components
-│   │   ├── dashboard/                  # Dashboard components
-│   │   └── ui/                         # Reusable UI components
-│   ├── contexts/                       # React contexts
-│   ├── lib/
-│   │   ├── api/                        # API client
-│   │   ├── auth/                       # JWT utilities
-│   │   ├── db/                         # MongoDB & models
-│   │   ├── services/                   # Business logic
-│   │   ├── utils/                      # Helper functions
-│   │   └── validations/                # Zod schemas
-│   └── middleware.ts                   # Security headers
-├── .env.example                        # Environment template
-└── README.md
-\`\`\`
-
-## 🔒 Security Measures
-
-- ✅ Passwords hashed with bcrypt (12 rounds)
-- ✅ JWT with short expiry + refresh tokens
-- ✅ Rate limiting (auth & API)
-- ✅ Input validation (Zod + Mongoose)
-- ✅ Security headers (CSP, HSTS, etc.)
-- ✅ NoSQL injection prevention
-- ✅ CSRF protection
-- ✅ No stack trace leaks
-
-## 🐛 Troubleshooting
-
-### MongoDB Connection Issues
-- Ensure MongoDB is running
-- Check connection string
-- Verify IP whitelist (MongoDB Atlas)
-
-### Module Not Found
-\`\`\`bash
-rm -rf node_modules package-lock.json
-npm install
-\`\`\`
-
-### Port Already in Use
-\`\`\`bash
-PORT=3001 npm run dev
-\`\`\`
+3. **Important:** Use MongoDB Atlas for production (not local MongoDB)
 
 ---
 
+## 🏗 Project Structure
+
+```
+task-management-system/
+├── 📁 src/
+│   ├── 📁 app/                    # Next.js App Router
+│   │   ├── 📁 (auth)/             # Auth pages (login, register)
+│   │   ├── 📁 api/                # API routes
+│   │   │   └── 📁 auth/           # Auth endpoints
+│   │   │   └── 📁 tasks/          # Task endpoints
+│   │   ├── 📁 dashboard/          # Dashboard page
+│   │   └── 📄 page.tsx            # Home (redirects)
+│   ├── 📁 components/
+│   │   ├── 📁 dashboard/          # Dashboard components
+│   │   └── 📁 ui/                 # Reusable UI components
+│   ├── 📁 contexts/               # React contexts
+│   ├── 📁 lib/
+│   │   ├── 📁 api/                # API client
+│   │   ├── 📁 auth/               # JWT utilities
+│   │   ├── 📁 db/                 # MongoDB & models
+│   │   ├── 📁 services/           # Business logic
+│   │   ├── 📁 utils/              # Helper functions
+│   │   └── 📁 validations/        # Zod schemas
+│   └── 📄 middleware.ts           # Security headers
+├── 📁 public/                     # Static assets
+├── 📄 .env.example                # Environment template
+└── 📄 README.md
+```
+
+---
+
+## 🔒 Security Checklist
+
+- [x] Passwords hashed with bcrypt (12 rounds)
+- [x] JWT with short expiry + refresh tokens
+- [x] Rate limiting (auth & API)
+- [x] Input validation (Zod + Mongoose)
+- [x] Security headers (CSP, HSTS, etc.)
+- [x] NoSQL injection prevention
+- [x] CSRF protection (SameSite cookies)
+- [x] No stack trace leaks in production
+
+---
+
+## 🐛 Troubleshooting
+
+<details>
+<summary><b>MongoDB Connection Issues</b></summary>
+
+- Ensure MongoDB is running
+- Check connection string format
+- Verify IP whitelist (MongoDB Atlas)
+- Check database user credentials
+
+</details>
+
+<details>
+<summary><b>Module Not Found</b></summary>
+
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
+
+</details>
+
+<details>
+<summary><b>Port Already in Use</b></summary>
+
+```bash
+PORT=3001 npm run dev
+```
+
+</details>
+
+---
+
+## 📄 License
+
+This project is created for assessment purposes.
+
+---
+
+<div align="center">
+
 **Built for Associate Software Engineer Assessment at Twist Digital**
+
+[⬆ Back to Top](#-task-management-system)
+
+</div>
