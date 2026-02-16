@@ -41,7 +41,7 @@ export function errorResponse(
  * Handle Zod validation errors
  */
 export function handleZodError(error: ZodError) {
-  const issues = error.issues || error.errors || [];
+  const issues = error.issues;
   const details = issues.map((err: any) => ({
     field: err.path.join('.'),
     message: err.message,
@@ -96,19 +96,20 @@ export function handleError(error: unknown) {
 /**
  * Rate limit exceeded response
  */
-export function rateLimitResponse(reset: Date) {
+export function rateLimitResponse(reset: Date | number) {
+  const resetDate = reset instanceof Date ? reset : new Date(reset);
   return NextResponse.json(
     {
       success: false,
       error: {
         message: 'Too many requests. Please try again later.',
-        reset: reset.toISOString(),
+        reset: resetDate.toISOString(),
       },
     },
     {
       status: 429,
       headers: {
-        'Retry-After': String(Math.ceil((reset.getTime() - Date.now()) / 1000)),
+        'Retry-After': String(Math.ceil((resetDate.getTime() - Date.now()) / 1000)),
       },
     }
   );
